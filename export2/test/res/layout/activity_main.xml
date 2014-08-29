@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="0.5"
+	    android:orientation="horizontal" >
+
+		<ImageButton
+		    android:id="@+id/mainbtn1"
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="0.5"
+		    android:text="@string/hello_world"
+		    android:background="@drawable/main1"
+		     >
+
+		</ImageButton>
+		<ImageButton
+		    android:id="@+id/mainbtn2"
+		    android:layout_width="0dp"
+		    android:layout_weight="0.5"
+		    android:layout_height="fill_parent"
+		    android:text="@string/hello_world"
+		    android:background="@drawable/main2"     
+			>
+		</ImageButton>
+	</LinearLayout>
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="0.5"
+	    android:orientation="horizontal" >
+		<ImageButton
+		    android:id="@+id/mainbtn3"
+		    android:layout_width="0dp"
+		   	android:layout_weight="0.5"
+		    android:layout_height="fill_parent"
+		    android:text="@string/hello_world"
+		    android:background="@drawable/main3"
+		     >
+		</ImageButton>
+		<ImageButton
+		    android:id="@+id/mainbtn4"
+		    android:layout_width="0dp"
+		    android:layout_weight="0.5"
+		    android:layout_height="fill_parent"
+		    android:text="@string/hello_world"
+			android:background="@drawable/main4">
+		    
+		</ImageButton>
+	</LinearLayout>
+	
+	
+</LinearLayout>

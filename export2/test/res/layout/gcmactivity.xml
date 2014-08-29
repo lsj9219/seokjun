@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout    
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+          <TextView
+          android:id="@+id/tv2"
+          android:layout_width="120dip"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_centerHorizontal="true"
+          android:text="구현중............" />
+    
+      <CheckBox
+          android:id="@+id/cb1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+           android:layout_marginTop="135dp"
+          android:text="방이 등록되었을 때 알림을 받습니다." />
+
+
+</RelativeLayout>
