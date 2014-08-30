@@ -40,7 +40,7 @@
             android:value="AIzaSyCFZHOO-AhPpByaehUlVtQmU110mF2mcSQ"/>
         <activity
             android:name="com.example.test.intro"
-            android:label="@string/bangchungmang">
+            android:label="@string/jachuigi">
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -78,9 +78,9 @@
             android:name="com.example.test.GcmActivity"
     	    android:label="@layout/gcmactivity">
         </activity>
-        <activity android:name="com.example.search.ListActivity" android:label="Listactivity"></activity>
-        <activity android:name="com.example.search.MyActivity"></activity>
-        <activity android:name="com.example.search.ImgActivity"></activity>
+        <activity android:name="com.example.searchlist.ListActivity" android:label="Listactivity"></activity>
+        <activity android:name="com.example.searchlist.MyActivity"></activity>
+        <activity android:name="com.example.searchlist.ImgActivity"></activity>
     
         <receiver
 		    android:name=".GcmBroadcastReceiver"

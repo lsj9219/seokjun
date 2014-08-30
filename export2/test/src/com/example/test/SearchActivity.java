@@ -98,7 +98,7 @@ public class SearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				  Intent intentSubActivity = 	new Intent(getBaseContext(), com.example.search.ListActivity.class);   
+				  Intent intentSubActivity = 	new Intent(getBaseContext(), com.example.searchlist.ListActivity.class);   
 			      startActivity(intentSubActivity);
 			}
 		});

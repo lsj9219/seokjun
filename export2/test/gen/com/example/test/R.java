@@ -1450,7 +1450,6 @@ containing a value of this type.
          */
         public static final int auth_client_using_bad_version_title=0x7f070014;
         public static final int badge=0x7f070038;
-        public static final int bangchungmang=0x7f070037;
         public static final int bojeung=0x7f07003e;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
@@ -1534,6 +1533,7 @@ containing a value of this type.
         public static final int hello_world=0x7f070029;
         public static final int intro=0x7f07002d;
         public static final int jachui=0x7f070041;
+        public static final int jachuigi=0x7f070037;
         public static final int location=0x7f07003b;
         /**  Location client code resources (prefix with location_client) 
          */

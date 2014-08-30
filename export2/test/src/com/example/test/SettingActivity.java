@@ -2,6 +2,8 @@ package com.example.test;
 
 import java.util.ArrayList;
 
+import com.example.gcm.GcmActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

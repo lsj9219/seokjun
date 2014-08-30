@@ -40,7 +40,7 @@
             android:value="AIzaSyCFZHOO-AhPpByaehUlVtQmU110mF2mcSQ"/>
         <activity
             android:name="com.example.test.intro"
-            android:label="@string/bangchungmang">
+            android:label="@string/jachuigi">
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -75,15 +75,15 @@
     	    android:label="@layout/settingactivity">
         </activity>
         <activity
-            android:name="com.example.test.GcmActivity"
+            android:name="com.example.gcm.GcmActivity"
     	    android:label="@layout/gcmactivity">
         </activity>
-        <activity android:name="com.example.search.ListActivity" android:label="Listactivity"></activity>
-        <activity android:name="com.example.search.MyActivity"></activity>
-        <activity android:name="com.example.search.ImgActivity"></activity>
+        <activity android:name="com.example.searchlist.ListActivity" android:label="Listactivity"></activity>
+        <activity android:name="com.example.searchlist.MyActivity"></activity>
+        <activity android:name="com.example.searchlist.ImgActivity"></activity>
     
         <receiver
-		    android:name=".GcmBroadcastReceiver"
+		    android:name=".com.example.gcm.GcmBroadcastReceiver
 			android:exported="true"
 		    android:permission="com.google.android.c2dm.permission.SEND" >
 		    <intent-filter>
@@ -92,7 +92,7 @@
 		        <category android:name="com.example.test" />
 		    </intent-filter>
 		</receiver>
-	<service android:name=".GcmIntentService" />
+	<service android:name=".com.example.gcm.GcmIntentService />
 	<meta-data
 	    android:name="com.google.android.gms.version"
 	    android:value="@integer/google_play_services_version" />

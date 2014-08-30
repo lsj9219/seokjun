@@ -61,26 +61,23 @@ public class MapActivity extends ActionBarActivity {
         mcontext = this;
         
         roomDataList = 	new ArrayList<Roomdata>();
-        
+        //Thread 돌려서 DB 읽어 오는 부분(DB -> PHP -> json) Asyntask(비동기 Thread)라서 읽는데 오래걸리므로 맨첨에 선언해줬음
+        task = new phpDown();
+        task.execute("http://14.63.219.212/sj/jsonget.php");
+    
         //picture = new PictureGet("http://14.63.219.212/sj/images/");
 		//picture.getRemoteImage("oneroom");
 		
         
         //초기 이동할 Lat, Lng 좌표.. 수정해야함
-        double bundle_lat = 36.632603;
-        double bundle_lng = 127.453067;
-        
-        
-        //Thread 돌려서 DB 읽어 오는 부분(DB -> PHP -> json)
-        task = new phpDown();
-        task.execute("http://14.63.219.212/sj/jsonget.php");
-             
+        double bundle_lat = 37.570227;
+        double bundle_lng = 126.982601;
+              
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         location = new LatLng(bundle_lat,bundle_lng);
-        
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location,11));
         map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location,16));
-	
+
         //infowindow(마커 클릭할때 열리는 창)
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
         //infowindow click listener
@@ -101,8 +98,33 @@ public class MapActivity extends ActionBarActivity {
                     .commit();
         }
         
-        //초기 뜨는 팝업창 구현
- 
+        //위치 선택 팝업창 구현
+		LanguageList = new ArrayList<String>();
+		LanguageList.add("서울");
+		LanguageList.add("경기");
+		//37.235338, 127.189047
+		LanguageList.add("지방");
+        
+		AlertDialog.Builder chooseDlg2 = new AlertDialog.Builder(MapActivity.this);
+		chooseDlg2.setTitle("위치선택");
+		ArrayAdapter<String> arrayAdt2 = new ArrayAdapter<String>(MapActivity.this,android.R.layout.select_dialog_item,LanguageList);
+		
+		chooseDlg2.setAdapter(arrayAdt2, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				if(which==0)
+			        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.570227,126.982601),16));
+				else if(which==1)
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.240781,127.185848),16));
+				else if(which==2)
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.629070,127.456653),16));
+			}
+		});
+		chooseDlg2.setCancelable(true);
+		chooseDlg2.show();
+		//위치선태 팝업창 구현끝
+        //언어 선택 팝업창 구현
 		LanguageList = new ArrayList<String>();
 		LanguageList.add("한국어");
 		LanguageList.add("English");
@@ -129,7 +151,7 @@ public class MapActivity extends ActionBarActivity {
 		});
 		chooseDlg.setCancelable(true);
 		chooseDlg.show();
-		//팝업창구현끝
+		//언어선태 팝업창 구현끝
     }
     private class CustomInfoWindowAdapter implements InfoWindowAdapter{
     	private View view;
