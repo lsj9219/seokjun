@@ -10,7 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +36,9 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+/**********************************************************************************
+//이 Activity는 수정 저장후 require API xx 오류가 뜨는데 Project메뉴 - Clean 한번 해주면 정상으로 돌아옴
+**********************************************************************************/
 public class MapActivity extends ActionBarActivity {
     phpDown task;
 	PictureGet picture;
@@ -42,13 +47,13 @@ public class MapActivity extends ActionBarActivity {
 	private ArrayList<Roomdata> roomDataList;
 	private Roomdata roomData;
 	
-	String Test;
-	LatLng cbnu;
+	LatLng location;
     LatLng latlng;
     String lat;
     String lng;
     Context mcontext;
     
+    ArrayList<String> LanguageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,34 +65,34 @@ public class MapActivity extends ActionBarActivity {
         //picture = new PictureGet("http://14.63.219.212/sj/images/");
 		//picture.getRemoteImage("oneroom");
 		
-        Bundle bundle = getIntent().getExtras();
-		double bundle_lat = bundle.getDouble("lat");
-		double bundle_lng = bundle.getDouble("lng");
-		
+        
+        //초기 이동할 Lat, Lng 좌표.. 수정해야함
+        double bundle_lat = 36.632603;
+        double bundle_lng = 127.453067;
+        
+        
+        //Thread 돌려서 DB 읽어 오는 부분(DB -> PHP -> json)
         task = new phpDown();
         task.execute("http://14.63.219.212/sj/jsonget.php");
-             	
+             
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        cbnu = new LatLng(bundle_lat,bundle_lng);
-
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cbnu,16));
-	
-        /*infowindow*/
-        map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        location = new LatLng(bundle_lat,bundle_lng);
         
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location,16));
+	
+        //infowindow(마커 클릭할때 열리는 창)
+        map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        //infowindow click listener
         map.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
-
 			@Override
 			public void onInfoWindowClick(Marker arg0) {
 				// TODO Auto-generated method stub
              Intent intentSubActivity = 	new Intent(getBaseContext(), RoomActivity.class);
-             
            	 intentSubActivity.putExtra("parcel", roomDataList.get(Integer.parseInt(arg0.getTitle())-1));
           	 intentSubActivity.putExtra("image", roomDataList.get(Integer.parseInt(arg0.getTitle())-1).pg.getImage());
 		      startActivity(intentSubActivity);
 			}
-        	
         });
     	
         if (savedInstanceState == null) {
@@ -95,6 +100,36 @@ public class MapActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        
+        //초기 뜨는 팝업창 구현
+ 
+		LanguageList = new ArrayList<String>();
+		LanguageList.add("한국어");
+		LanguageList.add("English");
+		LanguageList.add("中國語");
+		LanguageList.add("일본어");
+        
+		AlertDialog.Builder chooseDlg = new AlertDialog.Builder(MapActivity.this);
+		chooseDlg.setTitle("위치선택");
+		ArrayAdapter<String> arrayAdt = new ArrayAdapter<String>(MapActivity.this,android.R.layout.select_dialog_item,LanguageList);
+		
+		chooseDlg.setAdapter(arrayAdt, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				if(which==0)
+					Toast.makeText(mcontext, "한국어선택", Toast.LENGTH_SHORT).show();
+				else if(which==1)
+					Toast.makeText(mcontext, "영어선택", Toast.LENGTH_SHORT).show();
+				else if(which==2)
+					Toast.makeText(mcontext, "중국어선택", Toast.LENGTH_SHORT).show();
+				else if(which==3)
+					Toast.makeText(mcontext, "일본어선택", Toast.LENGTH_SHORT).show();
+				}
+		});
+		chooseDlg.setCancelable(true);
+		chooseDlg.show();
+		//팝업창구현끝
     }
     private class CustomInfoWindowAdapter implements InfoWindowAdapter{
     	private View view;
@@ -129,13 +164,10 @@ public class MapActivity extends ActionBarActivity {
             moneyUi.setText(rdt.getPrice());     
             return view;
 		}
-    	
-    	
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -152,7 +184,6 @@ public class MapActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -209,7 +240,6 @@ public class MapActivity extends ActionBarActivity {
                 int length=ja.length();
                 for(int i=0; i<length;i++){
    	                JSONObject jo = ja.getJSONObject(i);
-   	                Test = jo.getString("option");
    	                roomData = new Roomdata(jo.getString("index"),jo.getString("price"),jo.getString("name"),jo.getString("phone"),jo.getString("location"),jo.getString("option"),1,2,jo.getString("imgname"));	                
    	                roomDataList.add(roomData);
    	                lat = jo.getString("lat");

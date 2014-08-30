@@ -18,7 +18,7 @@ public class intro extends Activity {
 		}
 		Runnable irun = new Runnable(){
 			public void run(){
-			Intent i = new Intent(intro.this,TebActivity.class);
+			Intent i = new Intent(intro.this,MapActivity.class);
 			startActivity(i);
 			finish();
 			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
